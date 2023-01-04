@@ -1,0 +1,37 @@
+{%- apply spaceless %}
+    {% set level = level|default('2') %}
+    {% set link = path('pimcore_element', { element: object }) %}
+    {% set hasTitle = object.title is defined and object.title is not empty %}
+    {% set hasSubtitle = object.subtitle is defined and object.subtitle is not empty %}
+    {% set hasVisual = object.visual is defined and object.visual is not empty %}
+    {% set hasCategories = object.categories is defined and object.categories is not empty %}
+{% endapply -%}
+<div class="{{ cn_row() }}">
+    <div class="{{ cn_gap() }}">
+        <article class="flex relative w-full bg-white/10 border border-white/10 rounded-lg">
+            <a href="{{ link }}" class="absolute inset-0"></a>
+            <div class="order-1 px-6 py-4 my-auto">
+                {% if hasTitle %}
+                    <h{{ level }} class="{{ cn_title() }} text-xl"><a href="{{ link }}">{{ object.title }}</a></h{{ level }}>
+                {% endif %}
+                {% if hasSubtitle %}
+                    <div class="{{ cn(cn_prose(), hasTitle ? 'pt-2') }}"><p>{{ object.subtitle }}</p></div>
+                {% endif %}
+                {% if hasCategories %}
+                    <div class="{{ cn('text-xs uppercase opacity-60', (hasTitle or hasSubtitle) ? 'pt-2') }}">
+                        {% for item in object.categories %}
+                            {% if item.title is not empty and not loop.first %}, {% endif %}{{ item.title }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            {% if hasVisual %}
+                <div class="w-full md:w-1/3 pr-4 md:pr-2">
+                    {{ object.visual.thumbnail.html({
+                        imgAttributes: { class: 'rounded-l-lg' }
+                    })|raw }}
+                </div>
+            {% endif %}
+        </article>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+{% extends editmode ? "layouts/area.html.twig" : "layouts/blank.html.twig" %}
+
+{% set level = pimcore_select('level').getData|default('2') %}
+
+{% block content %}
+{% if objects is iterable and objects|length %}
+    <div class="flex flex-wrap {{ cn_row() }} pb-24">
+        {% for object in objects %}
+            <div class="flex w-full md:w-1/3 {{ cn_gap() }}">
+                {% include "includes/blogPost.html.twig" with { level, object } only %}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}

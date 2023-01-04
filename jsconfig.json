@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "commonjs",
+    "resolveJsonModule": true,
+    "baseUrl": "./assets/scripts",
+    "paths": {
+      "config/*":["./config/*"],
+      "helpers/*":["./helpers/*"],
+      "modules/*":["./modules/*"],
+      "extensions/*":["./extensions/*"]
+    }
+  },
+  "typeAcquisition": {
+    "enable": true,
+    "include": ["@types/ckeditor4"]
+  },
+  "include": [
+    "assets/scripts",
+  ],
+  "exclude": [
+    "public",
+    "vendor",
+    "**/vendor/*",
+    "node_modules",
+    "**/node_modules/*"
+  ]
+}

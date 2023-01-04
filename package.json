@@ -1,0 +1,46 @@
+{
+  "name": "brand-baboon-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "assets/scripts/main.js",
+  "scripts": {
+    "build": "rm -rf ./public/static; NODE_ENV=production webpack --mode production",
+    "start": "NODE_ENV=development webpack serve --progress --mode development"
+  },
+  "author": "Alexej Dyschelmann",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.19.1",
+    "@babel/runtime": "^7.19.0",
+    "@tailwindcss/typography": "^0.5.7",
+    "@types/ckeditor4": "^4.16.5",
+    "babel-loader": "^8.2.5",
+    "babel-preset-airbnb": "^5.0.0",
+    "browser-sync": "^2.27.10",
+    "browser-sync-webpack-plugin": "^2.3.0",
+    "css-loader": "^6.7.1",
+    "css-minimizer-webpack-plugin": "^4.1.0",
+    "favicons-webpack-plugin": "^6.0.0-alpha.1",
+    "html-webpack-plugin": "^5.5.0",
+    "lodash": "^4.17.21",
+    "mini-css-extract-plugin": "^2.6.1",
+    "node-sass": "^7.0.3",
+    "postcss": "^8.4.16",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-loader": "^7.0.1",
+    "postcss-preset-env": "^7.8.2",
+    "postcss-pxtorem": "^6.0.0",
+    "postcss-sort-media-queries": "^4.3.0",
+    "sass-loader": "^13.0.2",
+    "style-loader": "^3.3.1",
+    "tailwindcss": "^3.2",
+    "tailwindcss-hyphens": "^0.1.0",
+    "terser-webpack-plugin": "^5.3.6",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1"
+  },
+  "dependencies": {
+    "alpinejs": "^3.10.5"
+  }
+}

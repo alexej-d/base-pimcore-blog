@@ -1,0 +1,15 @@
+pimcore:
+    properties:
+        predefined:
+            definitions:
+                4e210368-8759-42be-9265-dfcf28f09443:
+                    name: 'Page: Footer'
+                    description: ''
+                    key: page_footer
+                    type: document
+                    data: ''
+                    config: ''
+                    ctype: document
+                    inheritable: true
+                    creationDate: 1672818560
+                    modificationDate: 1672818579

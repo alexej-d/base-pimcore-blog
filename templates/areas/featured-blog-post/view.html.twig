@@ -1,0 +1,18 @@
+{% extends editmode ? "layouts/area.html.twig" : "layouts/blank.html.twig" %}
+
+{% set level = pimcore_select('level').getData|default('2') %}
+
+{% block content %}
+    <div class="pb-24">
+        {{
+            pimcore_renderlet('teaser', {
+                controller: 'App\\Controller\\BlogController::blogPostTeaserAction',
+                class: 'bg-black',
+                type: 'object',
+                title: 'Ziehen Sie hier einen Beitrag hinein',
+                height: 400,
+                level,
+            })
+        }}
+    </div>
+{% endblock %}

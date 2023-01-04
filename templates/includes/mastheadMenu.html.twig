@@ -1,0 +1,63 @@
+{% set menuRenderer = pimcore_nav_renderer('menu') %}
+<nav>
+    <h2 class="sr-only">{{ 'Seitennavigation'|trans }}</h2>
+    <ul class="flex flex-wrap gap-4">
+        {# Static pages #}
+        {% for page in nav %}
+            {% if page and page.isVisible() and menuRenderer.accept(page) %}
+                {% set activeClass = page.getActive(true) ? 'font-bold text-white' : '' %}
+                {% set subnav = page.getPages() %}
+                {% set hasSubnav = subnav and subnav|length > 0 %}
+                <li class="relative group">
+                    <a{{ _self.link_attribs(page, cn('inline-block', activeClass ? activeClass)) }}>{{- page.getLabel() -}}</a>
+                    {% if subnav %}
+                        {% set children %}
+                            {% for page in subnav %}
+                                {% if page and page.isVisible() and menuRenderer.accept(page) %}
+                                    {% set activeClass = page.getActive(true) ? 'font-bold text-white' : '' %}
+                                    <li>
+                                        <a{{ _self.link_attribs(page, cn('block px-4', activeClass ? activeClass)) }}>{{- page.getLabel() -}}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        {% endset %}
+                        {{ _self.submenu(children) }}
+                    {% endif %}
+                </li>
+            {% endif %}
+        {% endfor %}
+        {# Category menu #}
+        {% set categories = blog_cats() %}
+        {% if categories is not empty and categories is iterable %}
+            <li class="relative group">
+                {{ 'Kategorien'|trans }}
+                {% set children %}
+                    {% for item in categories %}
+                        <li>
+                            <a href="{{ path('pimcore_element', { element: item }) }}" class="block px-4">{{- item.title -}}</a>
+                        </li>
+                    {% endfor %}
+                {% endset %}
+                {{ _self.submenu(children) }}
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
+{% macro link_attribs(page, class = null) %}
+    {% set classes = class ? [class] : [] %}
+    {% if page.getClass() is not empty %}{% set classes = classes|merge([page.getClass()]) %}{% endif %}
+    {% if classes is not empty %}class="{{ classes|join(' ') }}"{% endif %}
+    {% if page.getUri() is not empty %}href="{{ page.getUri() }}"{% endif %}
+    {% if page.getRelation() is not empty %}rel="{{ page.getRelation() }}"{% endif %}
+    {% if page.getTitle() is not empty %}title="{{ page.getTitle() }}"{% endif %}
+    {% if page.getTarget() is not empty %}target="{{ page.getTarget() }}"{% endif %}
+{% endmacro %}
+
+{% macro submenu(children) %}
+    <div class="absolute pt-4 top-full left-1/2 -translate-x-1/2 opacity-0 -translate-y-1/2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto max-w-[80vw] delay-300 group-hover:delay-[0s] w-60 transition">
+        <ul class="flex flex-col gap-4 py-4 bg-white rounded-sm text-black/80">
+        {{ children }}
+        </ul>
+    </div>
+{% endmacro %}

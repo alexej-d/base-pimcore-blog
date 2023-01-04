@@ -1,0 +1,5 @@
+[
+  { "name": "Text Weiß", "element": "span", "attributes": { "class": "text-white" } },
+  { "name": "2-spaltig", "element": "div", "attributes": { "class": "md:columns-2 gap-x-4 lg:gap-x-3" } },
+  { "name": "3-spaltig", "element": "div", "attributes": { "class": "md:columns-3 gap-x-4 lg:gap-x-3" } }
+]

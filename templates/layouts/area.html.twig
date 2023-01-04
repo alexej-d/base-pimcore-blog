@@ -1,0 +1,8 @@
+<div class="m-4 p-4 border-dashed border-2 border-transparent hover:border-gray-reddish-700">
+{% if empty|default %}
+    {% if editmode %}
+        <div class="p-4 bg-gray-300 opacity-40">Leere Komponente</div>
+    {% endif %}
+{% endif %}
+{{ block("content") }}
+</div>

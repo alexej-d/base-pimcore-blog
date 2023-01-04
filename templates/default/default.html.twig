@@ -1,0 +1,31 @@
+{% extends "layouts/base.html.twig" %}
+
+{% set title = pimcore_input('title', { placeholder: 'Titel' }) %}
+{% set subtitle = pimcore_input('subtitle', { placeholder: 'Untertitel' }) %}
+
+{% block content %}
+    <div class="pt-24">
+        {% if editmode or not title.isEmpty or not subtitle.isEmpty %}
+            <header class="{{ cn_row() }} pb-24">
+                <div class="{{ cn_gap() }}">
+                    {% if editmode or not title.isEmpty %}
+                        <h1 class="{{ cn_title() }} text-5xl text-white">{{ title|raw }}</h1>
+                    {% endif %}
+                    {% if editmode or not subtitle.isEmpty %}
+                        <div class="{{ cn('font-light prose-xl', not title.isEmpty ? 'pt-4', cn_prose()) }}">
+                            <p>{{ subtitle|raw }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </header>
+        {% endif %}
+    
+        {{ pimcore_areablock('content', bricks_config()) }}
+    </div>
+{% endblock %}
+
+{% block before_content %}
+{% if not editmode %}
+{{ parent() }}
+{% endif %}
+{% endblock %}

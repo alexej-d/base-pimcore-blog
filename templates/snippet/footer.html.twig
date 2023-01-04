@@ -1,0 +1,31 @@
+{% extends editmode ? "layouts/base.html.twig" : "layouts/blank.html.twig" %}
+
+{% block content %}
+<footer class="bg-white/10 border border-white/10 py-24">
+    <div class="{{ cn_row() }}">
+        <div class="{{ cn_gap() }}">
+            {% if root|default %}
+                <a href="{{ root }}" title="{{ root.getTitle }}">Logo</a>
+            {% else %}
+                Logo
+            {% endif %}
+        </div>
+    </div>
+</footer>
+{% endblock %}
+
+
+{% block before_content %}
+{% endblock %}
+{% block after_content %}
+{% endblock %}
+
+{% macro link_attribs(page, class = null) %}
+    {% set classes = class ? [class] : [] %}
+    {% if page.getClass() is not empty %}{% set classes = classes|merge([page.getClass()]) %}{% endif %}
+    {% if classes is not empty %}class="{{ classes|join(' ') }}"{% endif %}
+    {% if page.getUri() is not empty %}href="{{ page.getUri() }}"{% endif %}
+    {% if page.getRelation() is not empty %}rel="{{ page.getRelation() }}"{% endif %}
+    {% if page.getTitle() is not empty %}title="{{ page.getTitle() }}"{% endif %}
+    {% if page.getTarget() is not empty %}target="{{ page.getTarget() }}"{% endif %}
+{% endmacro %}
