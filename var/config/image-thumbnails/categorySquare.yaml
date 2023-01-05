@@ -1,0 +1,28 @@
+pimcore:
+    assets:
+        image:
+            thumbnails:
+                definitions:
+                    categorySquare:
+                        items:
+                            -
+                                method: cover
+                                arguments:
+                                    width: 144
+                                    height: 144
+                                    positioning: null
+                                    forceResize: false
+                        medias: {  }
+                        name: categorySquare
+                        description: ''
+                        group: ''
+                        format: SOURCE
+                        quality: 85
+                        highResolution: 0.0
+                        preserveColor: false
+                        preserveMetaData: false
+                        rasterizeSVG: false
+                        downloadable: false
+                        modificationDate: 1672911144
+                        creationDate: 1672911129
+                        preserveAnimation: false

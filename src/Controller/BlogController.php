@@ -18,7 +18,7 @@ class BlogController extends FrontendController
         return $this->forward(self::class . '::detailAction', ['object' => $object]);
     }
 
-    public function categoryDetailSlugAction(Request $request, DataObject\BlogPost $object) {
+    public function categoryDetailSlugAction(Request $request, DataObject\BlogCategory $object) {
         return $this->forward(self::class . '::categoryDetailAction', ['object' => $object]);
     }
 
@@ -72,7 +72,7 @@ class BlogController extends FrontendController
     }
 
     /**
-     * @Route("/blog/cat/{path}{name}~p{object}", name="blog-category-detail", defaults={"path"=""}, requirements={"path"=".*?", "name"="[\w-]+", "object"="\d+"})
+     * @Route("/blog/cat/{path}{name}~c{object}", name="blog-category-detail", defaults={"path"=""}, requirements={"path"=".*?", "name"="[\w-]+", "object"="\d+"})
      *
      * @return Response
      *
@@ -95,7 +95,13 @@ class BlogController extends FrontendController
             return $this->redirect($generatorUrl . ($queryString ? '?' . $queryString : ''));
         }
 
-        return $this->render('blog/category-detail.html.twig', ['object' => $object]);
+        $objects = DataObject\BlogPost::getList();
+        $objects->setCondition('categories LIKE ?', '%' . $object->getId() . '%');
+
+        return $this->render('blog/category-detail.html.twig', [
+            'object' => $object,
+            'objects' => $objects,
+        ]);
     }
 
 }

@@ -1,6 +1,51 @@
 {% extends "layouts/base.html.twig" %}
 
+{% set link = path('pimcore_element', { element: object }) %}
+{% set hasTitle = object.title is defined and object.title is not empty %}
+{% set hasSubtitle = object.subtitle is defined and object.subtitle is not empty %}
+{% set hasVisual = object.visual is defined and object.visual is not empty %}
+{% set hasCategories = object.categories is defined and object.categories is not empty %}
+{% set hasTeaserContent = object.teaserContent is defined and object.teaserContent is not empty %}
+{% set hasContent = object.content is defined and object.content is not empty %}
+
 {% block content %}
-    Text
+    <div class="pt-24">
+        {% if hasTitle or hasSubtitle %}
+            <header class="{{ cn_row() }} pb-24">
+                <div class="{{ cn_gap() }}">
+                    {% if hasTitle %}
+                        <h1 class="{{ cn_title() }} text-5xl text-white">{{ object.title }}</h1>
+                    {% endif %}
+                    {% if hasSubtitle %}
+                        <div class="{{ cn('font-light prose-xl', hasTitle ? 'pt-4', cn_prose()) }}">
+                            <p>{{ object.subtitle }}</p>
+                        </div>
+                    {% endif %}
+                    {% if hasCategories %}
+                        <div class="{{ cn('text-xs uppercase opacity-60', (hasTitle or hasSubtitle) ? 'pt-2') }}">
+                            {% for item in object.categories %}
+                                {% if item.title is not empty and not loop.first %}, {% endif %}<a href="{{ path('pimcore_element', { element: item }) }}">{{ item.title }}</a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </header>
+        {% endif %}
+        {% if hasVisual %}
+            {{ object.visual.thumbnail.html({
+                imgAttributes: { class: 'rounded-t-lg w-full mb-24' }
+            })|raw }}
+        {% endif %}
+        {% if hasTeaserContent %}
+            <div class="{{ cn_row() }}">
+                <div class="{{ cn_prose() }} {{ cn_gap() }} text-2xl pb-24 mx-auto">{{ object.teaserContent|raw }}</div>
+            </div>
+        {% endif %}
+        {% if hasContent %}
+            <div class="{{ cn_row() }}">
+                <div class="{{ cn_prose() }} {{ cn_gap() }} pb-24 mx-auto">{{ object.content|raw }}</div>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}
 

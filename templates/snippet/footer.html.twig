@@ -1,15 +1,35 @@
 {% extends editmode ? "layouts/base.html.twig" : "layouts/blank.html.twig" %}
 
+{% set content = pimcore_wysiwyg('content') %}
+{% set links = pimcore_block('links') %}
+
 {% block content %}
-<footer class="bg-white/10 border border-white/10 py-24">
-    <div class="{{ cn_row() }}">
-        <div class="{{ cn_gap() }}">
-            {% if root|default %}
-                <a href="{{ root }}" title="{{ root.getTitle }}">Logo</a>
-            {% else %}
-                Logo
+<footer class="bg-white/10 border border-white/10 pt-12 pb-24">
+    <div class="flex flex-wrap justify-between {{ cn_row() }}">
+        <div class="{{ cn_gap() }} pt-12">
+            <div class="uppercase font-bold text-lg">
+                {% if root|default %}
+                    <a href="{{ root }}" title="{{ root.getTitle }}">Logo</a>
+                {% else %}
+                    Logo
+                {% endif %}
+            </div>
+            {% if editmode or not content.isEmpty %}
+                {# Contact data #}
+                <div class="{{ cn_prose() }} pt-4">
+                    {{ content|raw }}
+                </div>
             {% endif %}
         </div>
+        {% if editmode or not links.isEmpty %}
+            <div class="{{ cn_gap() }} underline pt-12">
+                <ul>
+                    {% for item in links.iterator %}
+                        <li>{{ pimcore_link('link') }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
     </div>
 </footer>
 {% endblock %}

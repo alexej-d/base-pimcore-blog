@@ -1,1 +1,41 @@
-gdfgdfg
+{% extends "layouts/base.html.twig" %}
+
+{% set hasTitle = object.title is defined and object.title is not empty %}
+{% set hasDescription = object.description is defined and object.description is not empty %}
+{% set hasVisual = object.visual is defined and object.visual is not empty %}
+
+{% block content %}
+    <div class="pt-24">
+        {% if hasTitle or hasDescription %}
+            <header class="flex flex-wrap {{ cn_row() }} pb-24">
+                <div class="{{ cn_gap() }} order-1">
+                    {% if hasTitle %}
+                        <h1 class="{{ cn_title() }} text-5xl text-white">{{ object.title }}</h1>
+                    {% endif %}
+                    {% if hasDescription %}
+                        <div class="{{ cn('font-light prose-xl', hasTitle ? 'pt-4', cn_prose()) }}">
+                            {{ object.description|raw }}
+                        </div>
+                    {% endif %}
+                </div>
+                {% if hasVisual %}
+                    <div class="w-40 max-w-full {{ cn_gap() }}">
+                        {{ object.visual.thumbnail('categorySquare').html({
+                            imgAttributes: { class: 'rounded-lg' }
+                        })|raw }}
+                    </div>
+                {% endif %}
+            </header>
+        {% endif %}
+
+        {% if objects is iterable and objects|length %}
+            <div class="flex flex-wrap {{ cn_row() }} pb-24">
+                {% for object in objects %}
+                    <div class="flex w-full md:w-1/3 {{ cn_gap() }}">
+                        {% include "includes/blogPost.html.twig" with { level: 2, object } only %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

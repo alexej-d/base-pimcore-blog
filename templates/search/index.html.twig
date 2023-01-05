@@ -1,0 +1,27 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block content %}
+    <div class="pt-24">
+        <header class="{{ cn_row() }} pb-24">
+            <div class="{{ cn_gap() }}">
+                <h1 class="{{ cn_title() }} text-5xl text-white">{{ 'Suchergebnisse für "%query%"'|trans({ '%query%': query }) }}</h1>
+            </div>
+        </header>
+
+        {% if objects is iterable and objects|length %}
+            <div class="flex flex-wrap {{ cn_row() }} pb-24">
+                {% for object in objects %}
+                    <div class="flex w-full md:w-1/3 {{ cn_gap() }}">
+                        {% include "includes/blogPost.html.twig" with { level: 2, object } only %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="{{ cn_row() }} pb-24">
+                <div class="{{ cn_gap() }} text-2xl">
+                    <p>Leider ergab Ihre Suche keine Treffer…</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

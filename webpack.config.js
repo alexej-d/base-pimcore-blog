@@ -4,8 +4,6 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('css-minimizer-webpack-plugin')
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
-const HtmlWebPackPlugin = require('html-webpack-plugin')
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 const LOCAL_DOMAIN = process.env.DOMAIN || 'http://localhost.test'
@@ -147,24 +145,6 @@ const plugins = [
         new MiniCssExtractPlugin({
           filename: 'styles/[name].css',
           chunkFilename: 'styles/[id]-[contenthash].css',
-        }),
-        new HtmlWebPackPlugin({
-          filename: path.resolve('./templates/includes/manifest.html.twig'),
-          template: SRC_DIR + '/includes/manifest.ejs',
-          excludeChunks: Object.keys(entry),
-          inject: false,
-        }),
-        new FaviconsWebpackPlugin({
-          logo: SRC_DIR + '/images/favicon.svg',
-          inject: true,
-          prefix: 'images/',
-          favicons: {
-            lang: 'de-DE',
-            background: '#000',
-            theme_color: '#000',
-            appName: process.env.APP_NAME || 'Testapp',
-            loadManifestWithCredentials: true,
-          },
         }),
       ]
     : []),
